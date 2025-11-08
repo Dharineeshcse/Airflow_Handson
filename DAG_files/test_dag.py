@@ -6,11 +6,10 @@ from datetime import datetime
 with DAG(
     dag_id="kubernetes_executor_test",
     start_date=datetime(2024, 1, 1),
-    schedule_interval=None,
+    schedule=None,  # <-- changed from schedule_interval
     catchup=False,
 ) as dag:
 
-    # This command will run inside a NEW POD created by KubernetesExecutor
     task1 = BashOperator(
         task_id="run_in_k8s_pod",
         bash_command='echo "Hello from KubernetesExecutor! My pod name is $HOSTNAME"; sleep 10'
