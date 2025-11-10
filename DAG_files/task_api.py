@@ -6,7 +6,7 @@ from airflow.sdk import dag, task
 
 # 1. Define a dag using the @dag decorator
 @dag(
-    dag_id="taskflow_api_dag"
+    dag_id="taskflow_api_dag",
     schedule=None,
     start_date=pendulum.datetime(2025, 11, 9, tz="UTC"),
     tags=["task_api"],
