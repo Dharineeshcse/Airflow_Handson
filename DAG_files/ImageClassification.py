@@ -48,19 +48,52 @@ with DAG(
     extract = PythonOperator(
         task_id="extract",
         python_callable=extract_image,
-        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}},
+        executor_config={
+            "pod_override": {
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "base",
+                            "image": "dharineesh22/ml-image:1.0"
+                        }
+                    ]
+                }
+            }
+        },
     )
 
     grayscale = PythonOperator(
         task_id="grayscale",
         python_callable=convert_to_grayscale,
-        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}},
+        executor_config={
+            "pod_override": {
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "base",
+                            "image": "dharineesh22/ml-image:1.0"
+                        }
+                    ]
+                }
+            }
+        },
     )
 
     save = PythonOperator(
         task_id="save",
         python_callable=save_output,
-        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}},
+        executor_config={
+            "pod_override": {
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "base",
+                            "image": "dharineesh22/ml-image:1.0"
+                        }
+                    ]
+                }
+            }
+        },
     )
 
     extract >> grayscale >> save
