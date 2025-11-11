@@ -49,8 +49,8 @@ with DAG(
         task_id="extract",
         python_callable=extract_image,
         executor_config={
-            "pod_override": {
-                "spec": {
+            "KubernetesExecutor": {
+                "pod_override": {
                     "containers": [
                         {
                             "name": "base",
@@ -66,8 +66,8 @@ with DAG(
         task_id="grayscale",
         python_callable=convert_to_grayscale,
         executor_config={
-            "pod_override": {
-                "spec": {
+            "KubernetesExecutor": {
+                "pod_override": {
                     "containers": [
                         {
                             "name": "base",
@@ -83,8 +83,8 @@ with DAG(
         task_id="save",
         python_callable=save_output,
         executor_config={
-            "pod_override": {
-                "spec": {
+            "KubernetesExecutor": {
+                "pod_override": {
                     "containers": [
                         {
                             "name": "base",
