@@ -41,7 +41,7 @@ def save_output(**kwargs):
 with DAG(
     dag_id="ml_image_grayscale_etl",
     start_date=datetime(2025, 1, 1),
-    schedule_interval=None,
+    schedule=None,
     catchup=False,
 ) as dag:
 
