@@ -1,16 +1,17 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
-import os
 
 IMAGE_PATH = "/data/images/sample.jpg"
 OUTPUT_DIR = "/data/output"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
 def extract_image(**kwargs):
     from PIL import Image
     import numpy as np
+    import os
+
+    os.makedirs("/data/output", exist_ok=True)
 
     img = Image.open(IMAGE_PATH)
     arr = np.array(img)
@@ -28,6 +29,9 @@ def convert_to_grayscale(**kwargs):
 def save_output(**kwargs):
     from PIL import Image
     import numpy as np
+    import os
+
+    os.makedirs("/data/output", exist_ok=True)
 
     gray = np.array(kwargs['ti'].xcom_pull(key='gray_image'))
     img = Image.fromarray(gray.astype("uint8"))
@@ -44,19 +48,19 @@ with DAG(
     extract = PythonOperator(
         task_id="extract",
         python_callable=extract_image,
-        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}}
+        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}},
     )
 
     grayscale = PythonOperator(
         task_id="grayscale",
         python_callable=convert_to_grayscale,
-        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}}
+        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}},
     )
 
     save = PythonOperator(
         task_id="save",
         python_callable=save_output,
-        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}}
+        executor_config={"KubernetesExecutor": {"image": "dharineesh22/ml-image:1.0"}},
     )
 
     extract >> grayscale >> save
