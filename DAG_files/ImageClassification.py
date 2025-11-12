@@ -51,12 +51,14 @@ with DAG(
         executor_config={
             "KubernetesExecutor": {
                 "pod_override": {
-                    "containers": [
-                        {
-                            "name": "base",
-                            "image": "dharineesh22/ml-image:1.0"
-                        }
-                    ]
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "base",
+                                "image": "dharineesh22/ml-image:1.0"
+                            }
+                        ]
+                    }
                 }
             }
         },
@@ -68,12 +70,14 @@ with DAG(
         executor_config={
             "KubernetesExecutor": {
                 "pod_override": {
-                    "containers": [
-                        {
-                            "name": "base",
-                            "image": "dharineesh22/ml-image:1.0"
-                        }
-                    ]
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "base",
+                                "image": "dharineesh22/ml-image:1.0"
+                            }
+                        ]
+                    }
                 }
             }
         },
@@ -85,12 +89,14 @@ with DAG(
         executor_config={
             "KubernetesExecutor": {
                 "pod_override": {
-                    "containers": [
-                        {
-                            "name": "base",
-                            "image": "dharineesh22/ml-image:1.0"
-                        }
-                    ]
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "base",
+                                "image": "dharineesh22/ml-image:1.0"
+                            }
+                        ]
+                    }
                 }
             }
         },
