@@ -3,7 +3,7 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime
 from kubernetes.client import models as k8s
 
-IMAGE_PATH = "/data/images/sample.jpg"
+IMAGE_PATH = "/data/images/google-logo.jpg"
 OUTPUT_DIR = "/data/output"
 
 
