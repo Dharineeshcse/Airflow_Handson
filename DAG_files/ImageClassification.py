@@ -12,7 +12,7 @@ pod_override = k8s.V1Pod(
         containers=[
             k8s.V1Container(
                 name="base",
-                image="dharineesh22/ml-image:1.0"
+                image="dharineesh22/ml-image:1.1"
             )
         ]
     )
