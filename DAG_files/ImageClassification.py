@@ -61,38 +61,23 @@ with DAG(
     extract = PythonOperator(
         task_id="extract",
         python_callable=extract_image,
-       executor_config={
-            "pod_override": {
-                "containers": [
-                    {"name": "base", "image": "dharineesh22/ml-image:1.0"}
-                ]
-            }
-        },
+        executor_config={"pod_override": pod_override},
+
 
     )
 
     grayscale = PythonOperator(
         task_id="grayscale",
         python_callable=convert_to_grayscale,
-        executor_config={
-            "pod_override": {
-                "containers": [
-                    {"name": "base", "image": "dharineesh22/ml-image:1.0"}
-                ]
-            }
-        },
+        executor_config={"pod_override": pod_override},
+
     )
 
     save = PythonOperator(
         task_id="save",
         python_callable=save_output,
-        executor_config={
-            "pod_override": {
-                "containers": [
-                    {"name": "base", "image": "dharineesh22/ml-image:1.0"}
-                ]
-            }
-        },
+        executor_config={"pod_override": pod_override},
+
     )
 
     extract >> grayscale >> save
