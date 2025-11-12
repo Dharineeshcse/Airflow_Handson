@@ -7,14 +7,27 @@ IMAGE_PATH = "/data/images/google-logo.jpg"
 OUTPUT_DIR = "/data/output"
 
 
+volume = k8s.V1Volume(
+    name="data-volume",
+    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="airflow-ml-pvc")
+)
+
+volume_mount = k8s.V1VolumeMount(
+    name="data-volume",
+    mount_path="/data"
+)
+
+
 pod_override = k8s.V1Pod(
     spec=k8s.V1PodSpec(
         containers=[
             k8s.V1Container(
                 name="base",
-                image="dharineesh22/ml-image:1.1"
+                image="dharineesh22/ml-image:1.1",
+                volume_mounts=[volume_mount]
             )
-        ]
+        ],
+        volumes=[volume]
     )
 )
 
