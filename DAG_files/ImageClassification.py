@@ -1,9 +1,22 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+from kubernetes.client import models as k8s
 
 IMAGE_PATH = "/data/images/sample.jpg"
 OUTPUT_DIR = "/data/output"
+
+
+pod_override = k8s.V1Pod(
+    spec=k8s.V1PodSpec(
+        containers=[
+            k8s.V1Container(
+                name="base",
+                image="dharineesh22/ml-image:1.0"
+            )
+        ]
+    )
+)
 
 
 def extract_image(**kwargs):
