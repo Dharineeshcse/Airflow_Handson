@@ -37,7 +37,7 @@ def extract_image(**kwargs):
     import numpy as np
     import os
 
-    os.makedirs("/data/output", exist_ok=True)
+    os.makedirs("/data/output", exist_ok=True, mode=777)
 
     img = Image.open(IMAGE_PATH)
     arr = np.array(img)
@@ -57,7 +57,7 @@ def save_output(**kwargs):
     import numpy as np
     import os
 
-    os.makedirs("/data/output", exist_ok=True)
+    os.makedirs("/data/output", exist_ok=True, mode=777)
 
     gray = np.array(kwargs['ti'].xcom_pull(key='gray_image'))
     img = Image.fromarray(gray.astype("uint8"))
