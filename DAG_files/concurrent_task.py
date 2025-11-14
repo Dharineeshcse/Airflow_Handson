@@ -10,7 +10,7 @@ def print_task(task_number):
 with DAG(
     dag_id="large_100_task_dag",
     start_date=datetime(2024, 1, 1),
-    schedule_interval=None,  # manual trigger
+    schedule=None,  # manual trigger
     catchup=False,
     concurrency=200,
     max_active_tasks=200,
