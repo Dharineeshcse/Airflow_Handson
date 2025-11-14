@@ -12,10 +12,6 @@ with DAG(
     start_date=datetime(2024, 1, 1),
     schedule=None,  # manual trigger
     catchup=False,
-    concurrency=200,
-    max_active_tasks=200,
-    max_active_runs=10,
-    default_args={"owner": "airflow"},
 ) as dag:
 
     tasks = []
