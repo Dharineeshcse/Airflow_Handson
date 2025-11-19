@@ -16,7 +16,7 @@ with DAG(
     start = EmptyOperator(task_id="start")
 
     # Create 200 lightweight tasks
-    tasks = [BashOperator(task_id=f"task_{i}", bash_command='echo "This is another pod running..."') for i in range(1,31)]
+    tasks = [BashOperator(task_id=f"task_{i}", bash_command='echo "This is another pod running..."') for i in range(1,101)]
     end = EmptyOperator(task_id="end")
     
 
