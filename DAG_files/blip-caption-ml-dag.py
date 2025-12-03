@@ -47,7 +47,7 @@ default_args = {"owner": "airflow"}
 with DAG(
     dag_id="ml_blip_image_captioning",
     start_date=datetime(2024, 12, 1),
-    schedule_interval=None,
+    schedule=None,
     catchup=False,
     default_args=default_args,
 ) as dag:
