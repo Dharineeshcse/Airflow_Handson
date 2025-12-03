@@ -32,7 +32,7 @@ pod_override = k8s.V1Pod(
         containers=[
             k8s.V1Container(
                 name="blip-container",
-                image="dharineesh22/blip-image:1.1",   # replace with your image
+                image="dharineesh22/blip-image:1.2",   # replace with your image
                 volume_mounts=[volume_mount],
                 # resources=resources,  # uncomment if using GPU-enabled image
             )
@@ -52,25 +52,11 @@ with DAG(
     default_args=default_args,
 ) as dag:
 
-    # run_caption = KubernetesPodOperator(
-    #     task_id="run_blip_caption",
-    #     name="blip-image-caption",
-    #     namespace="default",
-    #     image="dharineesh22/blip-image:1.0",   # your image on dockerhub
-    #     cmds=["python3", "-u", "/app/infer_blip.py"],
-    #     arguments=[IMAGE_PATH, OUTPUT_DIR],
-    #     volumes=[volume],
-    #     volume_mounts=[volume_mount],
-    #     pod_override=pod_override,
-    #     get_logs=True,
-    #     is_delete_operator_pod=True,
-    # )
-
     run_caption = KubernetesPodOperator(
     task_id="run_blip_caption",
     name="run-blip-caption",
     namespace="airflow",
-    image="dharineesh22/blip-image:1.1",
+    image="dharineesh22/blip-image:1.2",
     cmds=["python", "/app/infer_blip.py"],
     arguments=["--image", IMAGE_PATH, "--output_dir", OUTPUT_DIR],
 
