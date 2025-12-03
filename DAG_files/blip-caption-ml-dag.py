@@ -70,7 +70,7 @@ with DAG(
     task_id="run_blip_caption",
     name="run-blip-caption",
     namespace="airflow",
-    image="dharineesh22/blip-image:1.0",
+    image="dharineesh22/blip-image:1.1",
     cmds=["python", "/app/infer_blip.py"],
     arguments=["--image", IMAGE_PATH, "--output_dir", OUTPUT_DIR],
 
