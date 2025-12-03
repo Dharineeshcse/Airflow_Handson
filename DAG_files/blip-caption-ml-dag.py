@@ -71,7 +71,7 @@ with DAG(
     name="run-blip-caption",
     namespace="airflow",
     image="dharineesh22/blip-image:1.0",
-    cmds=["python", "infer.py"],
+    cmds=["python", "/app/infer_blip.py"],
     arguments=["--image", IMAGE_PATH, "--output_dir", OUTPUT_DIR],
 
     full_pod_spec=pod_override,   # ← FIXED (use V1Pod object)
