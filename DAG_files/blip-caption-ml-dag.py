@@ -32,7 +32,7 @@ pod_override = k8s.V1Pod(
         containers=[
             k8s.V1Container(
                 name="blip-container",
-                image="dharineesh22/blip-image:1.0",   # replace with your image
+                image="dharineesh22/blip-image:1.1",   # replace with your image
                 volume_mounts=[volume_mount],
                 # resources=resources,  # uncomment if using GPU-enabled image
             )
