@@ -52,18 +52,33 @@ with DAG(
     default_args=default_args,
 ) as dag:
 
+    # run_caption = KubernetesPodOperator(
+    #     task_id="run_blip_caption",
+    #     name="blip-image-caption",
+    #     namespace="default",
+    #     image="dharineesh22/blip-image:1.0",   # your image on dockerhub
+    #     cmds=["python3", "-u", "/app/infer_blip.py"],
+    #     arguments=[IMAGE_PATH, OUTPUT_DIR],
+    #     volumes=[volume],
+    #     volume_mounts=[volume_mount],
+    #     pod_override=pod_override,
+    #     get_logs=True,
+    #     is_delete_operator_pod=True,
+    # )
+
     run_caption = KubernetesPodOperator(
-        task_id="run_blip_caption",
-        name="blip-image-caption",
-        namespace="default",
-        image="dharineesh22/blip-image:1.0",   # your image on dockerhub
-        cmds=["python3", "-u", "/app/infer_blip.py"],
-        arguments=[IMAGE_PATH, OUTPUT_DIR],
-        volumes=[volume],
-        volume_mounts=[volume_mount],
-        pod_override=pod_override,
-        get_logs=True,
-        is_delete_operator_pod=True,
-    )
+    task_id="run_blip_caption",
+    name="run-blip-caption",
+    namespace="airflow",
+    image="dharineesh22/blip-image:1.0",
+    cmds=["python", "infer.py"],
+    arguments=["--image", IMAGE_PATH, "--output_dir", OUTPUT_DIR],
+
+    full_pod_spec=pod_override,   # ← FIXED (use V1Pod object)
+
+    get_logs=True,
+    is_delete_operator_pod=True,
+)
+
 
     run_caption
