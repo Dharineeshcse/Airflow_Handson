@@ -1,7 +1,7 @@
 # ml_blip_captioning_dag.py
 from datetime import datetime
 from airflow import DAG
-from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
+from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 from kubernetes import client as k8s
 
 IMAGE_PATH = "/data/images/AWS_logo.png"
