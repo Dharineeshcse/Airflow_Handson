@@ -4,8 +4,8 @@ from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 from kubernetes import client as k8s
 
-IMAGE_PATH = "/data/images/AWS_logo.png"
-OUTPUT_DIR = "/data/output"
+# IMAGE_PATH = "/data/images/AWS_logo.png"
+# OUTPUT_DIR = "/data/output"
 TEMP_DIR = "/data/temp"
 
 # PVC volume (uses your provided claim name)
@@ -58,7 +58,6 @@ with DAG(
     namespace="airflow",
     image="dharineesh22/blip-image:1.3",
     cmds=["python", "/app/infer_blip.py"],
-    arguments=["--image", IMAGE_PATH, "--output_dir", OUTPUT_DIR],
 
     full_pod_spec=pod_override,   
 
