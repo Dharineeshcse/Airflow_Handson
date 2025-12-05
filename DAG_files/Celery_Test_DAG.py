@@ -21,7 +21,7 @@ with DAG(
     dag_id="celery_executor_test",
     default_args=default_args,
     start_date=datetime(2023, 1, 1),
-    schedule_interval=None,        # Trigger manually
+    schedule=None,
     catchup=False,
 ) as dag:
 
