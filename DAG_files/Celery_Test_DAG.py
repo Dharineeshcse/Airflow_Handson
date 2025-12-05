@@ -5,7 +5,7 @@ import time
 import socket
 
 def test_task():
-    print("====== Celery Task Started ======")
+    print("====== Celery Task Started ====== ")
     print(f"Worker hostname: {socket.gethostname()}")
     print("Sleeping for 5 seconds...")
     time.sleep(5)
@@ -21,7 +21,7 @@ with DAG(
     dag_id="celery_executor_test",
     default_args=default_args,
     start_date=datetime(2023, 1, 1),
-    schedule=None,
+    schedule=None ,
     catchup=False,
 ) as dag:
 
