@@ -1,7 +1,9 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+import time
 
+time.sleep(1)
 
 def print_task(task_number):
     print(f"simple task {task_number}")
