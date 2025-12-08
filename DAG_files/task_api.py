@@ -1,10 +1,8 @@
 import json
-
 import pendulum
 from airflow.sdk import dag, task
 
 
-# 1. Define a dag using the @dag decorator
 @dag(
     dag_id="taskflow_api_dag",
     schedule=None,
@@ -12,38 +10,35 @@ from airflow.sdk import dag, task
     tags=["task_api"],
 )
 def example_taskflow_api():
-    # 2. Define tasks using the @task decorator
-    @task()
+
+    @task(queue="ml_tasks")
     def extract() -> dict[str, int]:
         data_string = '{"land1": 80, "land2": 75, "land3": 19}'
-
         land_data_dict = json.loads(data_string)
-
         return land_data_dict
 
-    @task()
+    @task(queue="ml_tasks")
     def transform(land_data_dict: dict[str, int]) -> dict[str, int]:
         total_value = 0
         multi_value = 1
         for value in land_data_dict.values():
             total_value += value
             multi_value *= value
-
         return {"total_value": total_value, "multi_value": multi_value}
 
-    @task()
+    @task(queue="ml_tasks")
     def load_total(total_value: int) -> None:
         print(f"Total value is: {total_value}")
 
-    @task()
+    @task(queue="ml_tasks")
     def load_multiple(multiple_value: int) -> None:
         print(f"Multiple value is: {multiple_value}")
 
-    # 3. Define data (task) dependencies
+    # Dependencies
     land_data = extract()
-    order_summary = transform(land_data)
-    load_total(order_summary["total_value"])
-    load_multiple(order_summary["multi_value"])
+    summary = transform(land_data)
+    load_total(summary["total_value"])
+    load_multiple(summary["multi_value"])
 
 
 dag = example_taskflow_api()
