@@ -16,7 +16,7 @@ with DAG(
 
     tasks = []
 
-    for i in range(1, 101):
+    for i in range(1, 501):
         task = PythonOperator(
             task_id=f"task_{i}",
             python_callable=print_task,
