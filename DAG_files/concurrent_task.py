@@ -21,6 +21,7 @@ with DAG(
             task_id=f"task_{i}",
             python_callable=print_task,
             op_args=[i],
+            queue=ml_tasks,
         )
         tasks.append(task)
 
