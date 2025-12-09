@@ -1,10 +1,23 @@
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
+from kubernetes.client import V1Volume, V1VolumeMount, V1PersistentVolumeClaimVolumeSource
 from datetime import datetime
 
 ML_IMAGE = "dharineesh22/cifar-model-image:1.1"
 PVC_NAME = "datapipeline-ml-pvc"
 ML_VOLUME_MOUNT_PATH = "/mnt/airflow-ml"
+
+volume = V1Volume(
+    name="airflow-ml-volume",
+    persistent_volume_claim=V1PersistentVolumeClaimVolumeSource(
+        claim_name=PVC_NAME
+    ),
+)
+
+volume_mount = V1VolumeMount(
+    name="airflow-ml-volume",
+    mount_path=ML_VOLUME_MOUNT_PATH,
+)
 
 with DAG(
     dag_id="ml_training_pipeline",
@@ -21,14 +34,8 @@ with DAG(
         image=ML_IMAGE,
         cmds=["python3", "/app/train.py"],
         arguments=["prepare_dataset"],
-        volume_mounts=[{
-            "name": "airflow-ml-volume",
-            "mountPath": ML_VOLUME_MOUNT_PATH
-        }],
-        volumes=[{
-            "name": "airflow-ml-volume",
-            "persistentVolumeClaim": {"claimName": PVC_NAME}
-        }],
+        volume_mounts=[volume_mount],
+        volumes=[volume],
         get_logs=True,
         is_delete_operator_pod=True,
     )
@@ -40,14 +47,8 @@ with DAG(
         image=ML_IMAGE,
         cmds=["python3", "/app/train.py"],
         arguments=["train"],
-        volume_mounts=[{
-            "name": "airflow-ml-volume",
-            "mountPath": ML_VOLUME_MOUNT_PATH
-        }],
-        volumes=[{
-            "name": "airflow-ml-volume",
-            "persistentVolumeClaim": {"claimName": PVC_NAME}
-        }],
+        volume_mounts=[volume_mount],
+        volumes=[volume],
         get_logs=True,
         is_delete_operator_pod=True,
     )
@@ -59,14 +60,8 @@ with DAG(
         image=ML_IMAGE,
         cmds=["python3", "/app/train.py"],
         arguments=["inference"],
-        volume_mounts=[{
-            "name": "airflow-ml-volume",
-            "mountPath": ML_VOLUME_MOUNT_PATH
-        }],
-        volumes=[{
-            "name": "airflow-ml-volume",
-            "persistentVolumeClaim": {"claimName": PVC_NAME}
-        }],
+        volume_mounts=[volume_mount],
+        volumes=[volume],
         get_logs=True,
         is_delete_operator_pod=True,
     )
