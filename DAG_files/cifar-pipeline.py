@@ -3,7 +3,7 @@ from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperato
 from kubernetes.client import V1Volume, V1VolumeMount, V1PersistentVolumeClaimVolumeSource
 from datetime import datetime
 
-ML_IMAGE = "dharineesh22/cifar-model-image:1.3"
+ML_IMAGE = "dharineesh22/cifar-model-image:1.4"
 PVC_NAME = "datapipeline-ml-pvc"
 PVC_MOUNT_PATH = "/mnt/airflow-ml"
 
