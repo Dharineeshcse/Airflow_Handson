@@ -1,9 +1,12 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+import time
+
 
 
 def print_task(task_number):
+    time.sleep(5)
     print(f"simple task {task_number}")
 
 
@@ -16,11 +19,12 @@ with DAG(
 
     tasks = []
 
-    for i in range(1, 101):
+    for i in range(1, 501):
         task = PythonOperator(
             task_id=f"task_{i}",
             python_callable=print_task,
             op_args=[i],
+            queue="ml_tasks",
         )
         tasks.append(task)
 
