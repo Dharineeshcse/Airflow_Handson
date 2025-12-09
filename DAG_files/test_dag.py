@@ -12,11 +12,13 @@ with DAG(
 
     task1 = BashOperator(
         task_id="run_in_k8s_pod",
+        executor="CeleryExecutor",
         bash_command='echo "Hello from KubernetesExecutor! My pod name is $HOSTNAME"; sleep 10'
     )
 
     task2 = BashOperator(
         task_id="second_k8s_task",
+        executor="KubernetesExecutor",
         bash_command='echo "This is another pod running..."'
     )
 
