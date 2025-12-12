@@ -28,4 +28,4 @@ jobs:
             ${{ secrets.MINIO_SECRET_KEY }}
       - name: Upload new DAG files
         run: |
-          mc cp --recursive DAG_files/ myminio/${{ secrets.MINIO_BUCKET }}/
+          mc mirror --overwrite --quiet DAG_files/ myminio/${{ secrets.MINIO_BUCKET }}/
