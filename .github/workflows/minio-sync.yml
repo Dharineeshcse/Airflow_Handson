@@ -1,0 +1,36 @@
+name: Sync DAGs to MinIO
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'DAG_files/**'
+
+jobs:
+  sync-dags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install mc (MinIO Client)
+        run: |
+          wget https://dl.min.io/client/mc/release/linux-amd64/mc
+          chmod +x mc
+          sudo mv mc /usr/local/bin/
+
+      - name: Configure mc alias
+        run: |
+          mc alias set myminio ${{ secrets.MINIO_ENDPOINT }} \
+            ${{ secrets.MINIO_ACCESS_KEY }} \
+            ${{ secrets.MINIO_SECRET_KEY }}
+
+      - name: Delete existing files in bucket
+        run: |
+          mc rm --recursive --force myminio/${{ secrets.MINIO_BUCKET }}/dags/ || true
+
+      - name: Upload new DAG files
+        run: |
+          mc cp --recursive dags/ myminio/${{ secrets.MINIO_BUCKET }}/dags/
