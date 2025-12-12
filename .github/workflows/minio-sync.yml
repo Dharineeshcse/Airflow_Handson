@@ -26,11 +26,6 @@ jobs:
           mc alias set myminio ${{ secrets.MINIO_ENDPOINT }} \
             ${{ secrets.MINIO_ACCESS_KEY }} \
             ${{ secrets.MINIO_SECRET_KEY }}
-
-      - name: Delete existing files in bucket
-        run: |
-          mc rm --recursive --force myminio/${{ secrets.MINIO_BUCKET }}/ || true
-
       - name: Upload new DAG files
         run: |
-          mc cp --recursive DAG_files/ myminio/${{ secrets.MINIO_BUCKET }}/
+          mc cp --recursive --overwrite DAG_files/ myminio/${{ secrets.MINIO_BUCKET }}/
