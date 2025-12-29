@@ -11,5 +11,5 @@ with DAG(
 
     print_hi = BashOperator(
         task_id="sample_dag_task_2",
-        bash_command="echo created a ci/cd pipeline and made the job to run on my linux server and now the file will be overwritten  "
+        bash_command="echo created an ci/cd pipeline and made the job to run on my linux server and now the file will be overwritten  "
     )
